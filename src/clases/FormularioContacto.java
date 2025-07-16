@@ -9,6 +9,7 @@ import archivos.Archivo;
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 
@@ -20,7 +21,7 @@ public class FormularioContacto extends javax.swing.JFrame {
 
     final int INITIAL_WEIGHT = 450; // Ancho inicial de la ventana
     final int INITIAL_HEIGHT = 400; // Alto inicial de la ventana
-    final String TITLE = "Contactos Taller Torres S.A"; // Título de la ventana
+    final String TITLE = "Simulador de CallCenter"; // Título de la ventana
     final String SEARCH = "Buscar"; // Texto de búsqueda por defecto
 
     private Archivo archivo; // Manejo de archivos para guardar y cargar contactos
@@ -28,7 +29,8 @@ public class FormularioContacto extends javax.swing.JFrame {
     private Libreta libreta; // Lista de contactos
     private String[] stringContactos; // Arreglo para almacenar los contactos como cadenas
     private String cedula; // Cédula del contacto
-    private Queue<String> cola = new LinkedList<>(); // Cola para manejar contactos
+    private Queue<String> pendientes = new LinkedList<>(); // Cola para manejar contactos
+    private Stack<Contacto> atentidos;//Pila de contactos atendidos
     private boolean estadoB = false; // Estado del botón
     private boolean estadoPanel = true; // Estado del panel
     private int selTipo = 0; // Tipo de selección (mostrar cédulas o todo)
@@ -672,12 +674,12 @@ public class FormularioContacto extends javax.swing.JFrame {
         
         //cola.add(TITLE)
         for (String stringContacto : stringContactos) {
-            cola.add(stringContacto);
+            pendientes.add(stringContacto);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String siguiente = cola.poll();
+        String siguiente = pendientes.poll();
         JOptionPane.showMessageDialog(null, siguiente);
     }//GEN-LAST:event_jButton2ActionPerformed
     /**
