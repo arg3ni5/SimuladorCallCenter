@@ -15,6 +15,7 @@ public class Libreta {
     private Archivo archivo; // Manejo de archivos para guardar y cargar contactos
     private String[] listaContactos; // Lista de nombres de archivos de contactos
 
+    
     /**
      * Constructor por defecto que inicializa la libreta.
      */
@@ -31,13 +32,13 @@ public class Libreta {
             archivo = new Archivo("", true);
         }
         listaContactos = archivo.listarArchivos(); // Obtiene la lista de archivos
-        System.out.println(Arrays.toString(listaContactos));
+        System.out.println("Archivos cargados:" + Arrays.toString(listaContactos));
         libreta = new ArrayList<>();
         
         // Carga cada contacto desde su archivo correspondiente
         for (String listaContacto : listaContactos) {
             archivo = new Archivo(listaContacto);
-            libreta.add(archivo.consulta(listaContacto)); // Consulta el contacto y lo añade a la libreta
+            getLibreta().add(archivo.consulta(listaContacto)); // Consulta el contacto y lo añade a la libreta
         }
     }
 
@@ -47,9 +48,9 @@ public class Libreta {
      * @return Un arreglo de cadenas representando los contactos.
      */
     public String[] listarLibreta() {
-        String[] sal = new String[libreta.size()];
-        for (int i = 0; i < libreta.size(); i++) {
-            sal[i] = libreta.get(i).toString(); // Convierte cada contacto a cadena
+        String[] sal = new String[getLibreta().size()];
+        for (int i = 0; i < getLibreta().size(); i++) {
+            sal[i] = getLibreta().get(i).toString(); // Convierte cada contacto a cadena
         }
         return sal;
     }
@@ -60,9 +61,9 @@ public class Libreta {
      * @return Un arreglo de cadenas con las cédulas.
      */
     public String[] listarCedulas() {
-        String[] sal = new String[libreta.size()];
-        for (int i = 0; i < libreta.size(); i++) {
-            sal[i] = libreta.get(i).getCedula(); // Obtiene la cédula de cada contacto
+        String[] sal = new String[getLibreta().size()];
+        for (int i = 0; i < getLibreta().size(); i++) {
+            sal[i] = getLibreta().get(i).getCedula(); // Obtiene la cédula de cada contacto
         }
         return sal;
     }
@@ -109,7 +110,7 @@ public class Libreta {
         System.out.println(texto);
         ArrayList<Contacto> nuevaLibreta = new ArrayList<>();
         
-        for (Iterator<Contacto> iterator = libreta.iterator(); iterator.hasNext();) {
+        for (Iterator<Contacto> iterator = getLibreta().iterator(); iterator.hasNext();) {
             Contacto next = iterator.next();
             if (next.toString().toLowerCase().contains(texto.toLowerCase())) { // Busca coincidencias ignorando mayúsculas/minúsculas
                 nuevaLibreta.add(next); // Añade el contacto a la nueva lista si coincide
@@ -124,8 +125,8 @@ public class Libreta {
      * Guarda todos los contactos en un archivo llamado "Libreta".
      */
     public void guardarLibreta() {
-        for (int i = 0; i < libreta.size(); i++) {
-            archivo.guardarComo("", "Libreta", libreta.get(i).toString()); // Guarda cada contacto en el archivo "Libreta"
+        for (int i = 0; i < getLibreta().size(); i++) {
+            archivo.guardarComo("", "Libreta", getLibreta().get(i).toString()); // Guarda cada contacto en el archivo "Libreta"
         }
     }
 
@@ -136,13 +137,13 @@ public class Libreta {
      * @return La cédula del contacto o una cadena vacía si no existe.
      */
     public String getCedula(int pos) {
-        return (pos < libreta.size()) ? this.libreta.get(pos).getCedula() : ""; // Devuelve la cédula o vacío si está fuera de rango
+        return (pos < getLibreta().size()) ? this.getLibreta().get(pos).getCedula() : ""; // Devuelve la cédula o vacío si está fuera de rango
     }
 
     @Override
     public String toString() {
-        System.out.println(Arrays.toString(libreta.toArray()));
-        return "Libreta{" + "libreta=" + Arrays.toString(libreta.toArray()) + ", listaContactos=" + Arrays.toString(listaContactos) + '}';
+        System.out.println(Arrays.toString(getLibreta().toArray()));
+        return "Libreta{" + "libreta=" + Arrays.toString(getLibreta().toArray()) + ", listaContactos=" + Arrays.toString(listaContactos) + '}';
     }
 
     /**
@@ -154,5 +155,12 @@ public class Libreta {
         Libreta l = new Libreta();
         System.out.println(l.buscarArchivos("Cartago")); // Busca contactos que contengan "Cartago"
         // l.guardarLibreta(); // Descomentar para guardar la libreta
+    }
+
+    /**
+     * @return the libreta
+     */
+    public ArrayList<Contacto> getLibreta() {
+        return libreta;
     }
 }

@@ -65,6 +65,14 @@ public class Contacto {
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
+    
+        
+    /**
+     * @return nombreCompleto
+     */
+    public String getNombreCompleto() {
+        return nombre + " " + apellidos;
+    }
 
     /**
      * @return the fNacimiento
